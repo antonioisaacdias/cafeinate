@@ -33,14 +33,6 @@ Only the Xcode Command Line Tools are needed (`xcode-select --install`).
 
 Produces `Cafeinate.app` and `Cafeinate.dmg`.
 
-## Release
-
-Pushing a `v*` tag builds the app on GitHub Actions and publishes the DMG as a release:
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0
-```
-
 ## License
 
 [PolyForm Noncommercial 1.0.0](LICENSE.md) — free to use, study, modify and redistribute
