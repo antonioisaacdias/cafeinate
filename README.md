@@ -29,3 +29,8 @@ Precisa só das Command Line Tools do Xcode (`xcode-select --install`).
 ```
 
 Gera `Cafeinate.app` e `Cafeinate.dmg`.
+
+## Licença
+
+[PolyForm Noncommercial 1.0.0](LICENSE.md) — livre para usar, estudar, modificar e redistribuir
+para fins não comerciais. Venda ou uso comercial não são permitidos.
