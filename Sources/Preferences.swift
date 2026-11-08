@@ -6,6 +6,7 @@ final class Preferences {
         static let restoreState = "restoreState"
         static let wasActive = "wasActive"
         static let language = "language"
+        static let hideWhenInControlCenter = "hideWhenInControlCenter"
     }
 
     private let defaults = UserDefaults.standard
@@ -22,6 +23,11 @@ final class Preferences {
     var restoreState: Bool {
         get { defaults.bool(forKey: Keys.restoreState) }
         set { defaults.set(newValue, forKey: Keys.restoreState) }
+    }
+
+    var hideWhenInControlCenter: Bool {
+        get { defaults.object(forKey: Keys.hideWhenInControlCenter) as? Bool ?? true }
+        set { defaults.set(newValue, forKey: Keys.hideWhenInControlCenter) }
     }
 
     var wasActive: Bool {

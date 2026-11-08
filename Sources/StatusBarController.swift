@@ -8,11 +8,13 @@ final class StatusBarController: NSObject {
     private let wakeLock: WakeLock
     private let preferences: Preferences
     private let onOpenSettings: () -> Void
+    private let onToggle: () -> Void
 
-    init(wakeLock: WakeLock, preferences: Preferences, onOpenSettings: @escaping () -> Void) {
+    init(wakeLock: WakeLock, preferences: Preferences, onOpenSettings: @escaping () -> Void, onToggle: @escaping () -> Void) {
         self.wakeLock = wakeLock
         self.preferences = preferences
         self.onOpenSettings = onOpenSettings
+        self.onToggle = onToggle
         super.init()
 
         toggleItem.target = self
@@ -44,10 +46,12 @@ final class StatusBarController: NSObject {
         quitItem.title = strings.quit
     }
 
+    func setVisible(_ visible: Bool) {
+        statusItem.isVisible = visible
+    }
+
     @objc private func toggle() {
-        wakeLock.setActive(!wakeLock.isActive)
-        preferences.wasActive = wakeLock.isActive
-        refresh()
+        onToggle()
     }
 
     @objc private func openSettings() {

@@ -1,0 +1,53 @@
+name: Cafeinate
+options:
+  bundleIdPrefix: local.widget-cafeinate
+  createIntermediateGroups: true
+settings:
+  base:
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ARCHS: "arm64 x86_64"
+    ONLY_ACTIVE_ARCH: NO
+targets:
+  Cafeinate:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - Sources
+      - Shared
+      - Resources
+    dependencies:
+      - target: CafeinateControl
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.widget-cafeinate
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Cafeinate
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  CafeinateControl:
+    type: app-extension
+    platform: macOS
+    deploymentTarget: "26.0"
+    sources:
+      - ControlExtension
+      - Shared
+    entitlements:
+      path: ControlExtension/CafeinateControl.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+    info:
+      path: ControlExtension/Info.plist
+      properties:
+        CFBundleDisplayName: Cafeinate
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.widget-cafeinate.control
