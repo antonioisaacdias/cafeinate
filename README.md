@@ -21,17 +21,23 @@ Click the cup icon in the menu bar:
 - **Settings…**
   - **Launch at login**
   - **Keep last state after restart** — if it was on, it comes back on after a restart.
+  - **Hide from menu bar when added to Control Center** (macOS 26+)
   - **Language** — English or Português (Brasil). Defaults to the system language.
+
+### Control Center (macOS 26+)
+
+Open **Control Center → Edit Controls**, search for **Cafeinate** and add it. The toggle stays in sync with the menu bar icon, which hides itself while the control is in Control Center.
+If the icon is hidden, open Cafeinate again from Spotlight or Applications to reach Settings.
 
 ## Build
 
-Only the Xcode Command Line Tools are needed (`xcode-select --install`).
+Requires Xcode and [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`).
 
 ```bash
 ./build.sh
 ```
 
-Produces `Cafeinate.app` and `Cafeinate.dmg`.
+Produces `Cafeinate.dmg`.
 
 ## License
 
