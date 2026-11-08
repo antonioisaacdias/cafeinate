@@ -29,6 +29,7 @@ struct Strings {
     let settingsTitle: String
     let launchAtLogin: String
     let restoreState: String
+    let hideWhenInControlCenter: String
     let language: String
 
     static func of(_ language: Language) -> Strings {
@@ -44,6 +45,7 @@ struct Strings {
                 settingsTitle: "Configurações",
                 launchAtLogin: "Abrir automaticamente no login",
                 restoreState: "Manter o último estado ao reiniciar",
+                hideWhenInControlCenter: "Esconder da barra quando estiver na Central de Controle",
                 language: "Idioma:"
             )
         case .english:
@@ -57,6 +59,7 @@ struct Strings {
                 settingsTitle: "Settings",
                 launchAtLogin: "Launch at login",
                 restoreState: "Keep last state after restart",
+                hideWhenInControlCenter: "Hide from menu bar when added to Control Center",
                 language: "Language:"
             )
         }
