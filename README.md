@@ -2,9 +2,11 @@
 
 Lightweight macOS menu bar app that keeps your display awake with one click — `caffeinate` without the terminal.
 
+**[⬇ Download the latest version](https://github.com/antonioisaacdias/cafeinate/releases/latest/download/Cafeinate.dmg)**
+
 ## Install
 
-1. Download `Cafeinate.dmg` from the [Releases](../../releases) page.
+1. [Download `Cafeinate.dmg`](https://github.com/antonioisaacdias/cafeinate/releases/latest/download/Cafeinate.dmg) (or pick a version on the [Releases](../../releases) page).
 2. Open it and drag **Cafeinate** into the **Applications** folder.
 3. Open the app. The first time, macOS warns that it can't verify the developer:
    go to **System Settings → Privacy & Security** and click **Open Anyway**.
