@@ -5,9 +5,19 @@ final class Preferences {
     private enum Keys {
         static let restoreState = "restoreState"
         static let wasActive = "wasActive"
+        static let language = "language"
     }
 
     private let defaults = UserDefaults.standard
+
+    var language: Language {
+        get { defaults.string(forKey: Keys.language).flatMap(Language.init(rawValue:)) ?? .systemDefault }
+        set { defaults.set(newValue.rawValue, forKey: Keys.language) }
+    }
+
+    var strings: Strings {
+        Strings.of(language)
+    }
 
     var restoreState: Bool {
         get { defaults.bool(forKey: Keys.restoreState) }

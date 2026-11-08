@@ -2,14 +2,17 @@ import AppKit
 
 final class SettingsWindowController: NSWindowController {
     private let preferences: Preferences
-    private let launchAtLoginBox = NSButton(checkboxWithTitle: "Abrir automaticamente no login", target: nil, action: nil)
-    private let restoreStateBox = NSButton(checkboxWithTitle: "Manter o último estado ao reiniciar", target: nil, action: nil)
+    private let onLanguageChange: () -> Void
+    private let launchAtLoginBox = NSButton(checkboxWithTitle: "", target: nil, action: nil)
+    private let restoreStateBox = NSButton(checkboxWithTitle: "", target: nil, action: nil)
+    private let languageLabel = NSTextField(labelWithString: "")
+    private let languagePopup = NSPopUpButton()
 
-    init(preferences: Preferences) {
+    init(preferences: Preferences, onLanguageChange: @escaping () -> Void) {
         self.preferences = preferences
+        self.onLanguageChange = onLanguageChange
 
         let window = NSWindow(contentRect: .zero, styleMask: [.titled, .closable], backing: .buffered, defer: false)
-        window.title = "Configurações"
         window.isReleasedWhenClosed = false
         super.init(window: window)
 
@@ -17,9 +20,12 @@ final class SettingsWindowController: NSWindowController {
         launchAtLoginBox.action = #selector(launchAtLoginChanged)
         restoreStateBox.target = self
         restoreStateBox.action = #selector(restoreStateChanged)
+        languagePopup.addItems(withTitles: Language.allCases.map(\.displayName))
+        languagePopup.target = self
+        languagePopup.action = #selector(languageChanged)
 
         window.contentView = buildContent()
-        window.setContentSize(window.contentView!.fittingSize)
+        applyStrings()
         window.center()
     }
 
@@ -28,17 +34,22 @@ final class SettingsWindowController: NSWindowController {
     }
 
     func present() {
-        syncCheckboxes()
+        syncControls()
         NSApp.activate(ignoringOtherApps: true)
         showWindow(nil)
         window?.makeKeyAndOrderFront(nil)
     }
 
     private func buildContent() -> NSView {
-        let stack = NSStackView(views: [launchAtLoginBox, restoreStateBox])
+        let languageRow = NSStackView(views: [languageLabel, languagePopup])
+        languageRow.orientation = .horizontal
+        languageRow.spacing = 8
+
+        let stack = NSStackView(views: [launchAtLoginBox, restoreStateBox, languageRow])
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.spacing = 12
+        stack.setCustomSpacing(18, after: restoreStateBox)
         stack.translatesAutoresizingMaskIntoConstraints = false
 
         let container = NSView()
@@ -53,17 +64,35 @@ final class SettingsWindowController: NSWindowController {
         return container
     }
 
-    private func syncCheckboxes() {
+    private func applyStrings() {
+        let strings = preferences.strings
+        window?.title = strings.settingsTitle
+        launchAtLoginBox.title = strings.launchAtLogin
+        restoreStateBox.title = strings.restoreState
+        languageLabel.stringValue = strings.language
+        if let content = window?.contentView {
+            window?.setContentSize(content.fittingSize)
+        }
+    }
+
+    private func syncControls() {
         launchAtLoginBox.state = preferences.launchAtLogin ? .on : .off
         restoreStateBox.state = preferences.restoreState ? .on : .off
+        languagePopup.selectItem(at: Language.allCases.firstIndex(of: preferences.language) ?? 0)
     }
 
     @objc private func launchAtLoginChanged() {
         preferences.setLaunchAtLogin(launchAtLoginBox.state == .on)
-        syncCheckboxes()
+        syncControls()
     }
 
     @objc private func restoreStateChanged() {
         preferences.restoreState = restoreStateBox.state == .on
+    }
+
+    @objc private func languageChanged() {
+        preferences.language = Language.allCases[languagePopup.indexOfSelectedItem]
+        applyStrings()
+        onLanguageChange()
     }
 }
