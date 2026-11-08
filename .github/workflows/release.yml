@@ -10,9 +10,12 @@ permissions:
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
 
       - name: Build app and DMG
         run: VERSION="${GITHUB_REF_NAME#v}" ./build.sh
