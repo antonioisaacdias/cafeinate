@@ -9,8 +9,8 @@ MIN_OS="13.0"
 rm -rf "$APP" "$DMG" build
 mkdir -p "$APP/Contents/MacOS" build
 
-swiftc -O main.swift -target "arm64-apple-macos$MIN_OS" -o build/Cafeinate-arm64
-swiftc -O main.swift -target "x86_64-apple-macos$MIN_OS" -o build/Cafeinate-x86_64
+swiftc -O Sources/*.swift -target "arm64-apple-macos$MIN_OS" -o build/Cafeinate-arm64
+swiftc -O Sources/*.swift -target "x86_64-apple-macos$MIN_OS" -o build/Cafeinate-x86_64
 lipo -create build/Cafeinate-arm64 build/Cafeinate-x86_64 -output "$APP/Contents/MacOS/Cafeinate"
 
 cat > "$APP/Contents/Info.plist" <<EOF
