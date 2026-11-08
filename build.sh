@@ -5,6 +5,7 @@ cd "$(dirname "$0")"
 APP="Cafeinate.app"
 DMG="Cafeinate.dmg"
 MIN_OS="13.0"
+VERSION="${VERSION:-1.0}"
 
 rm -rf "$APP" "$DMG" build
 mkdir -p "$APP/Contents/MacOS" build
@@ -22,7 +23,7 @@ cat > "$APP/Contents/Info.plist" <<EOF
     <key>CFBundleIdentifier</key><string>local.widget-cafeinate</string>
     <key>CFBundleName</key><string>Cafeinate</string>
     <key>CFBundlePackageType</key><string>APPL</string>
-    <key>CFBundleShortVersionString</key><string>1.0</string>
+    <key>CFBundleShortVersionString</key><string>$VERSION</string>
     <key>LSMinimumSystemVersion</key><string>$MIN_OS</string>
     <key>LSUIElement</key><true/>
 </dict>
